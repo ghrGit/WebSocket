@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title></title>
+	<style type="text/css">
+		div{
+			width: 400px;
+			height:400px;
+			margin: 100px auto;
+			}
+
+	</style>
+	<script type="text/javascript" src='client.socket.js'></script>
+	<script type="text/javascript">
+
+		var socket=null;
+		var msg;
+		window.onload=function(){
+
+			//连接
+			document.getElementById('login').onclick=function(){
+				socket=io.connect('http://localhost:8888');
+				socket.on('hello',function(data){
+					alert(data);
+				});
+			}
+			//send
+			document.getElementById('send').onclick=function(){
+				msg=document.getElementById('msg').value;
+		        socket.emit('broadMsg',msg);
+		        socket.on('broad',function(data){
+		   	alert(data);//可进行效果处理
+		   });
+		}
+	}
+</script>
+
+</head>
+<body>
+	<div>
+		<input type='button' value="login in" id='login'/>
+		<input type="text" id='msg' name='msg'  />
+		<input type='button' value="send" id='send'/>
+	</div>
+</body>
+</html>
